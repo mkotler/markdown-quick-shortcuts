@@ -10,6 +10,9 @@ async function testMarkdownCommand(commandId: string, initialText: string, expec
     editor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, initialText.length));
 
     await vscode.commands.executeCommand(commandId);
+    
+    // Wait for the edit to be applied to the document
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     const text = testDocument.getText();
     assert.strictEqual(text, expectedText, assertMessage);
